@@ -225,19 +225,22 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
-          </li>
-          <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#getting-started" class="toc-h1 toc-link" data-title="Getting started">Getting started</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#api-endpoint" class="toc-h2 toc-link" data-title="API endpoint.">API endpoint.</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
+                    <a href="#authorization" class="toc-h2 toc-link" data-title="Authorization">Authorization</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#register-an-event" class="toc-h2 toc-link" data-title="Register an event">Register an event</a>
+                  </li>
+                  <li>
+                    <a href="#get-events" class="toc-h2 toc-link" data-title="Get events">Get events</a>
+                  </li>
+                  <li>
+                    <a href="#accion_scope" class="toc-h2 toc-link" data-title="- ACCION_SCOPE">- ACCION_SCOPE</a>
                   </li>
               </ul>
           </li>
@@ -254,182 +257,267 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Welcome to the Gen Eversince Client Doc! You can use this client to communicate with our fantastic <a href="https://github.com/digital-generation/gen-eversince">Eversince API</a>.</p>
 
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>Eversince API is an api that we use to register all kinds of events for further consultation.</p>
 
 <p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
+<h1 id='getting-started'>Getting started</h1>
+<p>For install our api client use this command.</p>
+<pre class="highlight shell tab-shell"><code><span class="gp">$ </span>npm install gen-eversince-api-client
+</code></pre><h2 id='api-endpoint'>API endpoint.</h2>
 <blockquote>
-<p>To authorize, use this code:</p>
+<p>To set the url(just once):</p>
 </blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">eversince</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'gen-eversince-client'</span><span class="p">);</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-</code></pre>
+<span class="nx">eversince</span><span class="p">.</span><span class="nx">setUrl</span><span class="p">(</span><span class="s1">'localhost:3000'</span><span class="p">);</span>
+</code></pre><h2 id='authorization'>Authorization</h2>
 <blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
+<p>To set the API KEY (just once):</p>
 </blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">eversince</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'gen-eversince-client'</span><span class="p">);</span>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<span class="nx">eversince</span><span class="p">.</span><span class="nx">setAuthKey</span><span class="p">(</span><span class="s1">'ThisIsMySecretKey'</span><span class="p">);</span>
+</code></pre><h2 id='register-an-event'>Register an event</h2>
+<p>You can register a new Event and Eversince will store it for further consultant. An event can be described as follows.</p>
+<h3 id='input'>Input</h3>
+<p>As an Input the function receives an Event object that has the following definition.</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
 <tr>
-<th>Parameter</th>
-<th>Default</th>
+<th>Field Name</th>
+<th>Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>actor_id</td>
+<td>Number</td>
+<td>Id of the user that makes the event.</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>actor_type</td>
+<td>String</td>
+<td>Role of the user.</td>
+</tr>
+<tr>
+<td>meta</td>
+<td>Meta</td>
+<td>Optional parameter. Object to store extra information of an event</td>
+</tr>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>Name of the event.</td>
+</tr>
+<tr>
+<td>subject_id</td>
+<td>Number</td>
+<td></td>
+</tr>
+<tr>
+<td>subject_type</td>
+<td>String</td>
+<td></td>
 </tr>
 </tbody></table>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<table><thead>
+<tr>
+<th>Field Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>country_id</td>
+<td>Number</td>
+<td>Id of the country according to the global_countries table.</td>
+</tr>
+<tr>
+<td>location_id</td>
+<td>Number</td>
+<td>Id of the location according to the global_locations table.</td>
+</tr>
+<tr>
+<td>program_id</td>
+<td>Number</td>
+<td>Id of the programs  according to the global_programs table.</td>
+</tr>
+</tbody></table>
+<h3 id='code-example'>Code example</h3><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">eversince</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'gen-eversince-client'</span><span class="p">);</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="kr">const</span> <span class="nx">registerEvent</span> <span class="o">=</span> <span class="nx">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">eventInstance</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="nx">eventInstance</span><span class="p">.</span><span class="nx">actor_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="nx">eventInstance</span><span class="p">.</span><span class="nx">actor_type</span> <span class="o">=</span> <span class="s1">'Actor_Type'</span><span class="p">;</span>
+  <span class="nx">eventInstance</span><span class="p">.</span><span class="nx">meta</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="nx">eventInstance</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">country_id</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+  <span class="nx">eventInstance</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">location_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="nx">eventInstance</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">program_id</span> <span class="o">=</span> <span class="mi">121</span><span class="p">;</span>
+  <span class="nx">eventInstance</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'Name'</span><span class="p">;</span>
+  <span class="nx">eventInstance</span><span class="p">.</span><span class="nx">subject_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="nx">eventInstance</span><span class="p">.</span><span class="nx">subject_type</span> <span class="o">=</span> <span class="s1">'1'</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">eversince</span><span class="p">.</span><span class="nx">registerEvent</span><span class="p">(</span><span class="nx">eventInstance</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
+<span class="nx">registerEvent</span><span class="p">();</span>
+</code></pre><h3 id='output'>Output</h3>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="err">code</span><span class="p">:</span><span class="w"> </span><span class="err">'success'</span><span class="p">,</span><span class="w">
+  </span><span class="err">data</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="err">'FzE</span><span class="mi">4</span><span class="err">D</span><span class="mi">3</span><span class="err">FLJSXToORn</span><span class="mi">1</span><span class="err">I</span><span class="mi">7</span><span class="err">I'</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="err">type</span><span class="p">:</span><span class="w"> </span><span class="err">'EvReg'</span><span class="w"> 
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
+<table><thead>
+<tr>
+<th>Field Name</th>
+<th>Description</th>
+<th>Possible values</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>code</td>
+<td>String indicating the status for the request.</td>
+<td>&#39;success&#39;, &#39;error&#39;</td>
+</tr>
+<tr>
+<td>data</td>
+<td>In case of success response the id of the new event. Otherwise error info.</td>
+<td><ul><li> success: <code>{id:&#39;someId&#39;}</code></li><li>error: <code>&#39;subject_id needs to be a number&#39;</code></li></td>
+</tr>
+<tr>
+<td>type</td>
+<td>A type of error in case is present</td>
+<td><ul><li> AuthError: The key that was specified is not correct.</li>, <li>UrlError: The endpoint that you specified can not be reached.</li>,<li> DTOError: You are missing to specify one required field or the type of that field is not valid.</li>, <li>EvReg: Success case for registering an Event</li></ul></td>
+</tr>
+</tbody></table>
+<h2 id='get-events'>Get events</h2>
+<p>You can query all the events that have been registered with some specific filters.</p>
+<h3 id='parameters'>Parameters</h3>
+<p>As an Input the function receives an object that contains all the filters</p>
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
+<table><thead>
+<tr>
+<th>Field Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>field</td>
+<td>String</td>
+<td>Valid values</td>
+</tr>
+<tr>
+<td>start</td>
+<td>Timestamp</td>
+<td>Start range that apply to the field that you specify on field</td>
+</tr>
+<tr>
+<td>end</td>
+<td>Timestamp</td>
+<td>End range that apply to the field that you specify on field.</td>
+</tr>
+<tr>
+<td>from</td>
+<td>Timestamp</td>
+<td>Very similar to start but the porpouse of this field is to give pagination a pivot to make queries from an specific timestamp</td>
+</tr>
+<tr>
+<td>actor_id</td>
+<td>Number</td>
+<td>Filter by an actor_id</td>
+</tr>
+</tbody></table>
+<h3 id='code-example-2'>Code example</h3><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">eversince</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'gen-eversince-client'</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">readEvents</span> <span class="o">=</span> <span class="nx">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span><span class="nx">await</span> <span class="nx">eversince</span><span class="p">.</span><span class="nx">getEvents</span><span class="p">({</span> <span class="s1">'actor_id'</span><span class="p">:</span> <span class="mi">5</span> <span class="p">});</span>
+<span class="p">}</span>
+<span class="nx">readEvents</span><span class="p">();</span>
+</code></pre><h3 id='output-2'>Output</h3>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="err">code</span><span class="p">:</span><span class="w"> </span><span class="err">'success'</span><span class="p">,</span><span class="w">
+  </span><span class="err">data</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"subject_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"actor_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"actor_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Actor_Type"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"subject_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1540831644925</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FzE4D3FLJSXToORn1I7I"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"location_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"program_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">121</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1540831644925</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"country_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="err">type</span><span class="p">:</span><span class="w"> </span><span class="err">'GetEv'</span><span class="w"> 
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<table><thead>
+<tr>
+<th>Field Name</th>
+<th>Description</th>
+<th>Possible values</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>code</td>
+<td>String indicating the status for the request.</td>
+<td>&#39;success&#39;, &#39;error&#39;</td>
+</tr>
+<tr>
+<td>data</td>
+<td>In case of success response an array of max 100 elements of Events that match the query parameters. Otherwise error info.</td>
+<td></td>
+</tr>
+<tr>
+<td>type</td>
+<td>A type of error in case is present</td>
+<td><ul><li> AuthError: The key that was specified is not correct.</li>, <li>UrlError: The endpoint that you specified can not be reached.</li>,<li> DTOError: You are missing to specify one required field or the type of that field is not valid.</li>, <li>GetEv: Success case for registering an Event</li></ul></td>
+</tr>
+</tbody></table>
 <h3 id='url-parameters'>URL Parameters</h3>
+<ul>
+<li>3 LETRAS SEAN DE LA ACCIÓN</li>
+<li>MAYUSC</li>
+<li>SEPARADOR _</li>
+</ul>
+<h2 id='accion_scope'>- ACCION_SCOPE</h2>
+<p>CRE_PERMISSIONS
+UPD_
+DEL_</p>
+
 <table><thead>
 <tr>
-<th>Parameter</th>
+<th>Code</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
+<td>CRE_PERMS</td>
+<td>Create a Permission</td>
 </tr>
-</tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
-<table><thead>
 <tr>
-<th>Parameter</th>
-<th>Description</th>
+<td>DEL_PERMS</td>
+<td>Delete a Permission</td>
 </tr>
-</thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
+<td>UPD_PERMS</td>
+<td>Update Permission</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
