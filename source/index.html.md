@@ -19,221 +19,165 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Gen Eversince Client Doc! You can use this client to communicate with our fantastic [Eversince API](https://github.com/digital-generation/gen-eversince).
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Eversince API is an api that we use to register all kinds of events for further consultation.
 
 This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
-# Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+# Getting started
+For install our api client use this command.
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+$ npm install gen-eversince-api-client
 ```
+
+## API endpoint.
+
+> To set the url(just once):
 
 ```javascript
-const kittn = require('kittn');
+const eversince = require('gen-eversince-client');
 
-let api = kittn.authorize('meowmeowmeow');
+eversince.setUrl('localhost:3000');
 ```
+## Authorization
 
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+> To set the API KEY (just once):
 
 ```javascript
-const kittn = require('kittn');
+const eversince = require('gen-eversince-client');
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+eversince.setAuthKey('ThisIsMySecretKey');
 ```
 
-> The above command returns JSON structured like this:
+## Register an event
+You can register a new Event and Eversince will store it for further consultant. An event can be described as follows.
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
+### Input
+As an Input the function receives an Event object that has the following definition.
 
-This endpoint retrieves all kittens.
+ Field Name | Type | Description 
+-------------- | -------------- | --------------
+actor_id | Number | Id of the user that makes the event.
+actor_type | String | Role of the user.
+meta | Meta | Optional parameter. Object to store extra information of an event
+name | String | Name of the event.
+subject_id | Number | 
+subject_type | String |
 
-### HTTP Request
+ Field Name | Type | Description 
+-------------- | -------------- | --------------
+country_id | Number | Id of the country according to the global_countries table. 
+location_id | Number | Id of the location according to the global_locations table.
+program_id | Number | Id of the programs  according to the global_programs table.
 
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
+### Code example
 ```javascript
-const kittn = require('kittn');
+const eversince = require('gen-eversince-client');
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+const registerEvent = async () => {
+  let eventInstance = {};
+  eventInstance.actor_id = 1;
+  eventInstance.actor_type = 'Actor_Type';
+  eventInstance.meta = {};
+  eventInstance.meta.country_id = 11;
+  eventInstance.meta.location_id = 1;
+  eventInstance.meta.program_id = 121;
+  eventInstance.name = 'Name';
+  eventInstance.subject_id = 0;
+  eventInstance.subject_type = '1';
+  let result = await eversince.registerEvent(eventInstance);
+  console.log(result);
+}
+
+registerEvent();
 ```
+### Output
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  code: 'success',
+  data: { id: 'FzE4D3FLJSXToORn1I7I' },
+  type: 'EvReg' 
 }
 ```
+ Field Name | Description | Possible values
+-------------- | -------------- | --------------
+code | String indicating the status for the request. | 'success', 'error'
+data | In case of success response the id of the new event. Otherwise error info. | <ul><li> success: ``` {id:'someId'}  ```</li><li>error: ``` 'subject_id needs to be a number'  ```</li>
+type | A type of error in case is present |<ul><li> AuthError: The key that was specified is not correct.</li>, <li>UrlError: The endpoint that you specified can not be reached.</li>,<li> DTOError: You are missing to specify one required field or the type of that field is not valid.</li>, <li>EvReg: Success case for registering an Event</li></ul>
 
-This endpoint retrieves a specific kitten.
+## Get events
+You can query all the events that have been registered with some specific filters.
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+### Parameters
+As an Input the function receives an object that contains all the filters
 
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
+ Field Name | Type | Description 
+-------------- | -------------- | --------------
+field | String | Valid values
+start | Timestamp | Start range that apply to the field that you specify on field
+end | Timestamp | End range that apply to the field that you specify on field.
+from | Timestamp | Very similar to start but the porpouse of this field is to give pagination a pivot to make queries from an specific timestamp
+actor_id | Number | Filter by an actor_id
+ 
+### Code example
 ```javascript
-const kittn = require('kittn');
+const eversince = require('gen-eversince-client');
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+const readEvents = async () => {
+  let result =await eversince.getEvents({ 'actor_id': 5 });
+}
+readEvents();
 ```
+### Output
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+  code: 'success',
+  data: [
+    {
+      "subject_type": "1",
+      "name": "Name",
+      "actor_id": 5,
+      "actor_type": "Actor_Type",
+      "subject_id": 0,
+      "created_at": 1540831644925,
+      "id": "FzE4D3FLJSXToORn1I7I",
+      "meta": {
+          "location_id": 1,
+          "program_id": 121,
+          "created_at": 1540831644925,
+          "country_id": 11
+      }
+    }
+  ],
+  type: 'GetEv' 
 }
 ```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
+ Field Name | Description | Possible values
+-------------- | -------------- | --------------
+code | String indicating the status for the request. | 'success', 'error'
+data | In case of success response an array of max 100 elements of Events that match the query parameters. Otherwise error info. | 
+type | A type of error in case is present |<ul><li> AuthError: The key that was specified is not correct.</li>, <li>UrlError: The endpoint that you specified can not be reached.</li>,<li> DTOError: You are missing to specify one required field or the type of that field is not valid.</li>, <li>GetEv: Success case for registering an Event</li></ul>
 
 ### URL Parameters
+- 3 LETRAS SEAN DE LA ACCIÓN
+- MAYUSC
+- SEPARADOR _
+- ACCION_SCOPE
+- 
+CRE_PERMISSIONS
+UPD_
+DEL_
 
-Parameter | Description
+Code | Description 
 --------- | -----------
-ID | The ID of the kitten to delete
-
+CRE_PERMS | Create a Permission
+DEL_PERMS | Delete a Permission
+UPD_PERMS | Update Permission
