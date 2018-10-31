@@ -165,7 +165,7 @@ type | A type of error in case is present | GetEv: Success case for registering 
 
 
 
-## Available Codes 
+### Available Codes 
 - 3 LETRAS SEAN DE LA ACCIÓN
 - MAYUSC
 - SEPARADOR _
