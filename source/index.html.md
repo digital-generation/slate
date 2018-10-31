@@ -2,10 +2,7 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
+
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -34,7 +31,7 @@ $ npm install gen-eversince-api-client
 # Configuration
 ## API endpoint.
 
-> To set the url(just once):
+To set the url(just once):
 
 ```javascript
 const eversince = require('gen-eversince-client');
@@ -43,7 +40,7 @@ eversince.setUrl('localhost:3000');
 ```
 ## Authentication
 
-> To set the API KEY (just once):
+To set the API KEY (just once):
 
 ```javascript
 const eversince = require('gen-eversince-client');
@@ -95,7 +92,7 @@ registerEvent();
 ```
 ### Output
 
-> The above command returns JSON structured like this:
+The above command returns JSON structured like this:
 
 ```json
 {
@@ -108,7 +105,7 @@ registerEvent();
 -------------- | -------------- | --------------
 code | String indicating the status for the request. | 'success', 'error'
 data | In case of success response the id of the new event. Otherwise error info. | <ul><li> success: ``` {id:'someId'}  ```</li><li>error: ``` 'subject_id needs to be a number'  ```</li>
-type | A type of error in case is present | EvReg: Success case for registering an Event.See [Errors](#Errors) for more types.
+type | A type of error in case is present | EvReg: Success case for registering an Event.See [Errors](#errors) for more types.
 
 ## Get events
 You can query all the events that have been registered with some specific filters.
@@ -135,7 +132,7 @@ readEvents();
 ```
 ### Output
 
-> The above command returns JSON structured like this:
+The above command returns JSON structured like this:
 
 ```json
 {
@@ -164,16 +161,8 @@ readEvents();
 -------------- | -------------- | --------------
 code | String indicating the status for the request. | 'success', 'error'
 data | In case of success response an array of max 100 elements of Events that match the query parameters. Otherwise error info. | 
-type | A type of error in case is present | GetEv: Success case for registering an Event. See [Errors](#Errors) for more types.
+type | A type of error in case is present | GetEv: Success case for registering an Event. See [Errors](#errors) for more types.
 
-## Errors
-Here are some error types that will be used in the client to give more information.
-
-Error Type | Description
--------------| --------------
-AuthError | The key that was specified is not correct. See the section of [Authentication](#Authentication) for more information.
-UrlError | The endpoint that you specified can not be reached. See the section of [API Endpoint](#APIEndpoint) for more information.
-DTOError | You are missing to specify one required field or the type of that field is not valid.
 
 
 ## Available Codes 
