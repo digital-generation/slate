@@ -31,7 +31,7 @@ For install our api client use this command.
 ```shell
 $ npm install gen-eversince-api-client
 ```
-
+# Configuration
 ## API endpoint.
 
 > To set the url(just once):
@@ -41,7 +41,7 @@ const eversince = require('gen-eversince-client');
 
 eversince.setUrl('localhost:3000');
 ```
-## Authorization
+## Authentication
 
 > To set the API KEY (just once):
 
@@ -50,7 +50,7 @@ const eversince = require('gen-eversince-client');
 
 eversince.setAuthKey('ThisIsMySecretKey');
 ```
-
+# Usage
 ## Register an event
 You can register a new Event and Eversince will store it for further consultant. An event can be described as follows.
 
@@ -108,7 +108,7 @@ registerEvent();
 -------------- | -------------- | --------------
 code | String indicating the status for the request. | 'success', 'error'
 data | In case of success response the id of the new event. Otherwise error info. | <ul><li> success: ``` {id:'someId'}  ```</li><li>error: ``` 'subject_id needs to be a number'  ```</li>
-type | A type of error in case is present |<ul><li> AuthError: The key that was specified is not correct.</li>, <li>UrlError: The endpoint that you specified can not be reached.</li>,<li> DTOError: You are missing to specify one required field or the type of that field is not valid.</li>, <li>EvReg: Success case for registering an Event</li></ul>
+type | A type of error in case is present | EvReg: Success case for registering an Event.See [Errors](#Errors) for more types.
 
 ## Get events
 You can query all the events that have been registered with some specific filters.
@@ -164,9 +164,19 @@ readEvents();
 -------------- | -------------- | --------------
 code | String indicating the status for the request. | 'success', 'error'
 data | In case of success response an array of max 100 elements of Events that match the query parameters. Otherwise error info. | 
-type | A type of error in case is present |<ul><li> AuthError: The key that was specified is not correct.</li>, <li>UrlError: The endpoint that you specified can not be reached.</li>,<li> DTOError: You are missing to specify one required field or the type of that field is not valid.</li>, <li>GetEv: Success case for registering an Event</li></ul>
+type | A type of error in case is present | GetEv: Success case for registering an Event. See [Errors](#Errors) for more types.
 
-### URL Parameters
+## Errors
+Here are some error types that will be used in the client to give more information.
+
+Error Type | Description
+-------------| --------------
+AuthError | The key that was specified is not correct. See the section of [Authentication](#Authentication) for more information.
+UrlError | The endpoint that you specified can not be reached. See the section of [API Endpoint](#APIEndpoint) for more information.
+DTOError | You are missing to specify one required field or the type of that field is not valid.
+
+
+## Available Codes 
 - 3 LETRAS SEAN DE LA ACCIÓN
 - MAYUSC
 - SEPARADOR _
