@@ -5,8 +5,6 @@ language_tabs: # must be one of https://git.io/vQNgJ
 
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
   - errors
@@ -58,7 +56,7 @@ As an Input the function receives an Event object that has the following definit
 -------------- | -------------- | --------------
 actor_id | Number | Id of the user that makes the event.
 actor_type | String | Role of the user.
-meta | Meta | Optional parameter. Object to store extra information of an event
+meta | Object | Optional parameter. Object to store extra information of an event. See below table to get detail on what properties could be in this object.
 name | String | Name of the event.
 subject_id | Number | 
 subject_type | String |
@@ -162,21 +160,3 @@ The above command returns JSON structured like this:
 code | String indicating the status for the request. | 'success', 'error'
 data | In case of success response an array of max 100 elements of Events that match the query parameters. Otherwise error info. | 
 type | A type of error in case is present | GetEv: Success case for registering an Event. See [Errors](#errors) for more types.
-
-
-
-### Available Codes 
-- 3 LETRAS SEAN DE LA ACCIÓN
-- MAYUSC
-- SEPARADOR _
-- ACCION_SCOPE
-- 
-CRE_PERMISSIONS
-UPD_
-DEL_
-
-Code | Description 
---------- | -----------
-CRE_PERMS | Create a Permission
-DEL_PERMS | Delete a Permission
-UPD_PERMS | Update Permission
