@@ -61,11 +61,15 @@ name | String | Name of the event.
 subject_id | Number | 
 subject_type | String |
 
+Meta fields:
+
  Field Name | Type | Description 
 -------------- | -------------- | --------------
 country_id | Number | Id of the country according to the global_countries table. 
 location_id | Number | Id of the location according to the global_locations table.
 program_id | Number | Id of the programs  according to the global_programs table.
+actor_name | String | Optional parameter. Name of the actor that makes the action. 
+subject_name | String | Optional parameter. Name of the subject that receives the action.
 
 ### Code example
 ```javascript
@@ -79,6 +83,8 @@ const registerEvent = async () => {
   eventInstance.meta.country_id = 11;
   eventInstance.meta.location_id = 1;
   eventInstance.meta.program_id = 121;
+  eventInstance.meta.actor_name = 'actor_ name';
+  eventInstance.meta.subject_name = 'subject_ name';
   eventInstance.name = 'Name';
   eventInstance.subject_id = 0;
   eventInstance.subject_type = '1';
@@ -148,7 +154,9 @@ The above command returns JSON structured like this:
           "location_id": 1,
           "program_id": 121,
           "created_at": 1540831644925,
-          "country_id": 11
+          "country_id": 11,
+          "actor_name": "actor_name",
+          "subject_name": "subject_name",
       }
     }
   ],
