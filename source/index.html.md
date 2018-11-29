@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: Gen-Recruitment-config
 
 language_tabs: # must be one of https://git.io/vQNgJ
 
@@ -14,157 +14,195 @@ search: true
 
 # Introduction
 
-Welcome to the Gen Eversince Client Doc! You can use this client to communicate with our fantastic [Eversince API](https://github.com/digital-generation/gen-eversince).
+Welcome to the gen-recruitment-config! 
 
-Eversince API is an api that we use to register all kinds of events for further consultation.
+This repository has been created to simplify  the way you can get or update the current configuration of the recruitment process.
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+https://github.com/digital-generation/gen-recruitment-config
 
+
+# Our recruitment Process Concepts
+
+A recruitment process is the flow where the applicants and recruiters make different actions such as filling forms, answer exams, interviews, grades, etc. As an output of the recruitment process we know which applicants are more elegible to participate in Generation.
+
+This library is helpful to configure some actions that the system do during this process:
+- Communicate with our applicants (email).
+- Let the students know their current status on the recruitment process (status explanaitions).
+- Establish rules to identify what students are not/probably elegible to be part of Generation. (Demographic rules, TypeformQuestions, TypeformAnswers).
+
+## Emails
+We use a configuration that let us send emails to applicants when they reach an status on an specific stage. 
+For example let's say that we want to invite applicants to fill a form when they have finished the registration form an specific program of Kenya. The email rule looks like this:
+
+````json
+{
+  "type": "program",
+  "programId": 191,
+  "text": "Thank you for completing the registration form.Your next step is to complete the application.",
+  "status": "passed",
+  "stage": "registrationForm",
+  "scheduled": []
+}
+````
+## Status Explanaitions
+Every time the student finish an stage we provide them an status explanaition in our platform. It's very similar to the email rule but with different communication channel.
+
+Here's an example of the status explanation rule.
+
+````json
+{
+  "type": "program",
+  "programId": 1,
+  "text": "Gracias por completar el formulario de Generation Spain. ¡Enhorabuena, has superado la primera fase del proceso! A continuación, te invitamos a realizar el resto del proceso que consta de los siguientes pasos: formulario detallado, subida de documentos acreditativos, tests básicos de selección y video entrevista. ¡Te esperamos! Generation Spain.",
+  "status": "passed",
+  "stage": "demographicForm"
+},
+````
+## Demographic rules
+This rules are to determine the applicant status based on his answers. 
+
+For example let's suppose that Generation has the following rules to give a training course: 
+- Age between 18 and 30. (yes, they are good candidates)
+- Age equals 17. (they are good candidates too, but we prefer to wait until 18 years old, please flagged them to decide if they are going to pass).
+- Age Above 30 (reject them). 
+
+Also in case they are flagged or rejected Generation wants to give a message.
+This "rules" can be persisted in the following way:
+
+```json
+{
+  "key": "birthDate",
+  "type": "location",
+  "programId": 222,
+  "locationId": 121,
+  "flagValues": {
+      "equals": 17
+  },
+  "flaggedExplanation": "We have noted that you are not in our target age range, but under special circumstances you may still be eligible for our program. We will reach out to you to discuss!",
+  "killerValues": {
+      "outsideExclusive": [
+          18,
+          30
+      ]
+  },
+  "rejectedExplanation": "Unfortunately, we can only accept applicants between the ages of 18 and 29. We wish you the best on your journey."
+},
+```
+## TypeformQuestions
+As you know Generation has presence in many countries that speaks many languages, so we use typeformQuestions rules to know which field is referenced with the question. So we can ask "When did you born?", "Date of birth", ... but with typeformQuestions we know we are asking birthdate.
+```json
+{
+  "type": "db",
+  "countryId": 1,
+  "text": "Date of birth",
+  "fieldName": "birthDate"
+},
+{
+  "type": "db",
+  "countryId": 1,
+  "text": "When did you born?",
+  "fieldName": "birthDate"
+},
+```
+## Typeform Answers
+As you know Generation has presence in many countries that speaks many languages, so we use typeformAnswer rules to know when the answer is equivalent. So we can receive an answer to Gender "Male", "Men", ... but with typeformAnswers we know that all of that answers are refering to Male and that we store those answers as "M"
+```json
+{
+  "countryId": 1,
+  "field": "gender",
+  "values": [
+      {
+          "answer": "Male",
+          "value": "M"
+      },
+      {
+          "answer": "Men",
+          "value": "M"
+      },
+  ]
+}
+````
 # Getting started
+
 For install our api client use this command.
 
 ```shell
-$ npm install gen-eversince-api-client
+$ npm install gen-recruitment-config
 ```
-# Configuration
-## API endpoint.
+# Configure
+## NOSQL endpoint.
 
-To set the url(just once):
+To set the url of the no-sql services that store the rules(just once):
 
 ```javascript
-const eversince = require('gen-eversince-client');
+const recruitmentConfig = require('gen-recruitment-config');
 
-eversince.setUrl('localhost:3000');
+recruitmentConfig.setUrl('localhost:3000');
 ```
-## Authentication
+# Get Whole Configuration
 
-To set the API KEY (just once):
+You can use the following methods to get the whole configuration of an specific kind of rule. The result of each one of the following methods will be a promise that resolves an array of rules.
+Method Name | Example
+-------------- | -------------- 
+getDemographicRules | ```let rulesArray = await recruitmentConfig.getDemographicRules()```
+getEmailMessages | ```let rulesArray = await recruitmentConfig.getEmailMessages()```
+getStatusExplanations | ```let rulesArray = await recruitmentConfig.getStatusExplanations()```
+getTypeformAnswers | ```let rulesArray = await recruitmentConfig.getTypeformAnswers()```
+getTypeformQuestions | ```let rulesArray = await recruitmentConfig.getTypeformQuestions()```
 
+See Demographic, StatusExplanation, TypeformAnswers, TypeformQuestions sections to get field detail.
+
+# Set Rules
+A set operation needs an scope(country, program or location), because all the rules that match that scope will be deleted and then all the new rules will be added.
+## Understanding scopes
+An scope is the area that affects a rules. There are two types of scope:
+- program: This kind of scope needs to specify programId and indicates that all the recruitment process that belongs to a program are affected by this rule.
+- location: This kind of scope needs to specify programId and locationId. Indicates that all the recruitment process that belongs to this program and location are affected.
+
+In case that two rules affect a recruitment process the location has greater priority than the program.
+
+## Code example.
+You can set the rules for an specific scope for the following rules:
+Method Name | Example
+-------------- | -------------- 
+setDemographicRules | ```let response = await recruitmentConfig.setDemographicRules()```
+setEmailRules | ```let response = await recruitmentConfig.setEmailRules()```
+setStatusExplanationRules | ```let response = await recruitmentConfig.setStatusExplanationRules()```
+
+As an output of each of those methods you will receive a promise that resolves this:
 ```javascript
-const eversince = require('gen-eversince-client');
-
-eversince.setAuthKey('ThisIsMySecretKey');
-```
-# Usage
-## Register an event
-You can register a new Event and Eversince will store it for further consultant. An event can be described as follows.
-
-### Input
-As an Input the function receives an Event object that has the following definition.
-
- Field Name | Type | Description 
--------------- | -------------- | --------------
-actor_id | Number | Id of the user that makes the event.
-actor_type | String | Role of the user.
-meta | Object | Optional parameter. Object to store extra information of an event. See below table to get detail on what properties could be in this object.
-name | String | Name of the event.
-subject_id | Number | 
-subject_type | String |
-
-Meta fields:
-
- Field Name | Type | Description 
--------------- | -------------- | --------------
-country_id | Number | Id of the country according to the global_countries table. 
-location_id | Number | Id of the location according to the global_locations table.
-program_id | Number | Id of the programs  according to the global_programs table.
-actor_name | String | Optional parameter. Name of the actor that makes the action. 
-subject_name | String | Optional parameter. Name of the subject that receives the action.
-
-### Code example
-```javascript
-const eversince = require('gen-eversince-client');
-
-const registerEvent = async () => {
-  let eventInstance = {};
-  eventInstance.actor_id = 1;
-  eventInstance.actor_type = 'Actor_Type';
-  eventInstance.meta = {};
-  eventInstance.meta.country_id = 11;
-  eventInstance.meta.location_id = 1;
-  eventInstance.meta.program_id = 121;
-  eventInstance.meta.actor_name = 'actor_ name';
-  eventInstance.meta.subject_name = 'subject_ name';
-  eventInstance.name = 'Name';
-  eventInstance.subject_id = 0;
-  eventInstance.subject_type = '1';
-  let result = await eversince.registerEvent(eventInstance);
-  console.log(result);
-}
-
-registerEvent();
-```
-### Output
-
-The above command returns JSON structured like this:
-
-```json
+//success response
 {
-  code: 'success',
-  data: { id: 'FzE4D3FLJSXToORn1I7I' },
-  type: 'EvReg' 
+  ok: true
 }
-```
- Field Name | Description | Possible values
--------------- | -------------- | --------------
-code | String indicating the status for the request. | 'success', 'error'
-data | In case of success response the id of the new event. Otherwise error info. | <ul><li> success: ``` {id:'someId'}  ```</li><li>error: ``` 'subject_id needs to be a number'  ```</li>
-type | A type of error in case is present | EvReg: Success case for registering an Event.See [Errors](#errors) for more types.
-
-## Get events
-You can query all the events that have been registered with some specific filters.
-
-### Parameters
-As an Input the function receives an object that contains all the filters
-
- Field Name | Type | Description 
--------------- | -------------- | --------------
-field | String | Valid values
-start | Timestamp | Start range that apply to the field that you specify on field
-end | Timestamp | End range that apply to the field that you specify on field.
-from | Timestamp | Very similar to start but the porpouse of this field is to give pagination a pivot to make queries from an specific timestamp
-actor_id | Number | Filter by an actor_id
- 
-### Code example
-```javascript
-const eversince = require('gen-eversince-client');
-
-const readEvents = async () => {
-  let result =await eversince.getEvents({ 'actor_id': 5 });
-}
-readEvents();
-```
-### Output
-
-The above command returns JSON structured like this:
-
-```json
+// error response
 {
-  code: 'success',
-  data: [
-    {
-      "subject_type": "1",
-      "name": "Name",
-      "actor_id": 5,
-      "actor_type": "Actor_Type",
-      "subject_id": 0,
-      "created_at": 1540831644925,
-      "id": "FzE4D3FLJSXToORn1I7I",
-      "meta": {
-          "location_id": 1,
-          "program_id": 121,
-          "created_at": 1540831644925,
-          "country_id": 11,
-          "actor_name": "actor_name",
-          "subject_name": "subject_name",
-      }
-    }
-  ],
-  type: 'GetEv' 
+  ok: false,
+  errors: []
 }
 ```
- Field Name | Description | Possible values
--------------- | -------------- | --------------
-code | String indicating the status for the request. | 'success', 'error'
-data | In case of success response an array of max 100 elements of Events that match the query parameters. Otherwise error info. | 
-type | A type of error in case is present | GetEv: Success case for registering an Event. See [Errors](#errors) for more types.
+
+# Add rules
+
+An add operation needs an scope(country, program or location or may be more info),
+because if there's a rule that already contains a rule then the rules will be merged.
+
+## Code example.
+
+You can add rules for an specific scope for the following rules:
+Method Name | Example
+-------------- | -------------- 
+addTypeformAnswerRules | ```let response = await recruitmentConfig.addTypeformAnswerRules()```
+addTypeformQuestionRules | ```let response = await recruitmentConfig.addTypeformQuestionRules()```
+
+As an output of each of those methods you will receive a promise that resolves this:
+```javascript
+//success response
+{
+  ok: true
+}
+// error response
+{
+  ok: false,
+  errors: []
+}
