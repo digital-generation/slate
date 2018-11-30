@@ -90,6 +90,7 @@ This "rules" can be persisted in the following way:
 ````
 ## TypeformQuestions
 As you know Generation has presence in many countries that speaks many languages, so we use typeformQuestions rules to know which field is referenced with the question. So we can ask "When did you born?", "Date of birth", ... but with typeformQuestions we know we are asking birthdate.
+
 ````json
 {
   "type": "db",
@@ -104,8 +105,10 @@ As you know Generation has presence in many countries that speaks many languages
   "fieldName": "birthDate"
 },
 ````
+
 ## Typeform Answers
 As you know Generation has presence in many countries that speaks many languages, so we use typeformAnswer rules to know when the answer is equivalent. So we can receive an answer to Gender "Male", "Men", ... but with typeformAnswers we know that all of that answers are refering to Male and that we store those answers as "M"
+
 ````json
 {
   "countryId": 1,
@@ -122,6 +125,7 @@ As you know Generation has presence in many countries that speaks many languages
   ]
 }
 ````
+
 # Getting started
 
 For install our api client use this command.
@@ -129,6 +133,7 @@ For install our api client use this command.
 ````shell
 $ npm install gen-recruitment-config
 ````
+
 # Configure
 ## NOSQL endpoint.
 
@@ -163,14 +168,23 @@ In case that two rules affect a recruitment process the location has greater pri
 
 ## Code example.
 You can set the rules for an specific scope for the following rules:
-Method Name | Example
--------------- | -------------- 
-setDemographicRules | ````let response = await recruitmentConfig.setDemographicRules()```
-setEmailRules | ````let response = await recruitmentConfig.setEmailRules()```
-setStatusExplanationRules | ````let response = await recruitmentConfig.setStatusExplanationRules()```
+
+- setDemographicRules
+
+````javascript
+let response = await recruitmentConfig.setDemographicRules()
+````
+- setEmailRules
+````javascript
+let response = await recruitmentConfig.setEmailRules()
+````
+- setStatusExplanationRules
+````javascript
+let response = await recruitmentConfig.setStatusExplanationRules()
+````
 
 As an output of each of those methods you will receive a promise that resolves this:
-```javascript
+````javascript
 //success response
 {
   ok: true
@@ -180,7 +194,7 @@ As an output of each of those methods you will receive a promise that resolves t
   ok: false,
   errors: []
 }
-```
+````
 
 # Add rules
 
