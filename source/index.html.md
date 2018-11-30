@@ -227,11 +227,13 @@ because if there's a rule that already contains a rule then the rules will be me
 You can add rules for an specific scope for the following rules:
 
 - addTypeformAnswerRules
+
 ````javascript
 let response = await recruitmentConfig.addTypeformAnswerRules()
 ````
 - addTypeformQuestionRules
 ````javascript
+
 let response = await recruitmentConfig.addTypeformQuestionRules()
 ````
 
