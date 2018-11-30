@@ -147,13 +147,31 @@ recruitmentConfig.setUrl('localhost:3000');
 # Get Whole Configuration
 
 You can use the following methods to get the whole configuration of an specific kind of rule. The result of each one of the following methods will be a promise that resolves an array of rules.
-Method Name | Example
--------------- | -------------- 
-getDemographicRules | ````let rulesArray = await recruitmentConfig.getDemographicRules()```
-getEmailMessages | ````let rulesArray = await recruitmentConfig.getEmailMessages()```
-getStatusExplanations | ````let rulesArray = await recruitmentConfig.getStatusExplanations()```
-getTypeformAnswers | ````let rulesArray = await recruitmentConfig.getTypeformAnswers()```
-getTypeformQuestions | ````let rulesArray = await recruitmentConfig.getTypeformQuestions()```
+- getDemographicRules
+
+````javascript
+let rulesArray = await recruitmentConfig.getDemographicRules()
+````
+- getEmailMessages
+
+````javascript
+let rulesArray = await recruitmentConfig.getEmailMessages()
+````
+- getStatusExplanations
+
+````javascript
+let rulesArray = await recruitmentConfig.getStatusExplanations()
+````
+- getTypeformAnswers
+
+````javascript
+let rulesArray = await recruitmentConfig.getTypeformAnswers()
+````
+- getTypeformQuestions
+
+````javascript
+let rulesArray = await recruitmentConfig.getTypeformQuestions()
+````
 
 See Demographic, StatusExplanation, TypeformAnswers, TypeformQuestions sections to get field detail.
 
@@ -175,15 +193,18 @@ You can set the rules for an specific scope for the following rules:
 let response = await recruitmentConfig.setDemographicRules()
 ````
 - setEmailRules
+
 ````javascript
 let response = await recruitmentConfig.setEmailRules()
 ````
 - setStatusExplanationRules
+
 ````javascript
 let response = await recruitmentConfig.setStatusExplanationRules()
 ````
 
 As an output of each of those methods you will receive a promise that resolves this:
+
 ````javascript
 //success response
 {
@@ -204,12 +225,18 @@ because if there's a rule that already contains a rule then the rules will be me
 ## Code example.
 
 You can add rules for an specific scope for the following rules:
-Method Name | Example
--------------- | -------------- 
-addTypeformAnswerRules | ````let response = await recruitmentConfig.addTypeformAnswerRules()```
-addTypeformQuestionRules | ````let response = await recruitmentConfig.addTypeformQuestionRules()```
+
+- addTypeformAnswerRules
+````javascript
+let response = await recruitmentConfig.addTypeformAnswerRules()
+````
+- addTypeformQuestionRules
+````javascript
+let response = await recruitmentConfig.addTypeformQuestionRules()
+````
 
 As an output of each of those methods you will receive a promise that resolves this:
+
 ```javascript
 //success response
 {

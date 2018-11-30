@@ -1,6 +1,7 @@
 # Errors <a name=Errors></a>
 
 Here are some error types that will be used to give more information.
+
 Error Code | Description 
 -------- | ----- 
  DEM_VERR_01 | Demographic rule: InvalidKey 
