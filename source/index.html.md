@@ -232,6 +232,7 @@ You can add rules for an specific scope for the following rules:
 let response = await recruitmentConfig.addTypeformAnswerRules()
 ````
 - addTypeformQuestionRules
+
 ````javascript
 
 let response = await recruitmentConfig.addTypeformQuestionRules()
