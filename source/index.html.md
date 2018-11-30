@@ -69,7 +69,7 @@ For example let's suppose that Generation has the following rules to give a trai
 Also in case they are flagged or rejected Generation wants to give a message.
 This "rules" can be persisted in the following way:
 
-```json
+````json
 {
   "key": "birthDate",
   "type": "location",
@@ -87,10 +87,10 @@ This "rules" can be persisted in the following way:
   },
   "rejectedExplanation": "Unfortunately, we can only accept applicants between the ages of 18 and 29. We wish you the best on your journey."
 },
-```
+````
 ## TypeformQuestions
 As you know Generation has presence in many countries that speaks many languages, so we use typeformQuestions rules to know which field is referenced with the question. So we can ask "When did you born?", "Date of birth", ... but with typeformQuestions we know we are asking birthdate.
-```json
+````json
 {
   "type": "db",
   "countryId": 1,
@@ -103,10 +103,10 @@ As you know Generation has presence in many countries that speaks many languages
   "text": "When did you born?",
   "fieldName": "birthDate"
 },
-```
+````
 ## Typeform Answers
 As you know Generation has presence in many countries that speaks many languages, so we use typeformAnswer rules to know when the answer is equivalent. So we can receive an answer to Gender "Male", "Men", ... but with typeformAnswers we know that all of that answers are refering to Male and that we store those answers as "M"
-```json
+````json
 {
   "countryId": 1,
   "field": "gender",
@@ -126,29 +126,29 @@ As you know Generation has presence in many countries that speaks many languages
 
 For install our api client use this command.
 
-```shell
+````shell
 $ npm install gen-recruitment-config
-```
+````
 # Configure
 ## NOSQL endpoint.
 
 To set the url of the no-sql services that store the rules(just once):
 
-```javascript
+````javascript
 const recruitmentConfig = require('gen-recruitment-config');
 
 recruitmentConfig.setUrl('localhost:3000');
-```
+````
 # Get Whole Configuration
 
 You can use the following methods to get the whole configuration of an specific kind of rule. The result of each one of the following methods will be a promise that resolves an array of rules.
 Method Name | Example
 -------------- | -------------- 
-getDemographicRules | ```let rulesArray = await recruitmentConfig.getDemographicRules()```
-getEmailMessages | ```let rulesArray = await recruitmentConfig.getEmailMessages()```
-getStatusExplanations | ```let rulesArray = await recruitmentConfig.getStatusExplanations()```
-getTypeformAnswers | ```let rulesArray = await recruitmentConfig.getTypeformAnswers()```
-getTypeformQuestions | ```let rulesArray = await recruitmentConfig.getTypeformQuestions()```
+getDemographicRules | ````let rulesArray = await recruitmentConfig.getDemographicRules()```
+getEmailMessages | ````let rulesArray = await recruitmentConfig.getEmailMessages()```
+getStatusExplanations | ````let rulesArray = await recruitmentConfig.getStatusExplanations()```
+getTypeformAnswers | ````let rulesArray = await recruitmentConfig.getTypeformAnswers()```
+getTypeformQuestions | ````let rulesArray = await recruitmentConfig.getTypeformQuestions()```
 
 See Demographic, StatusExplanation, TypeformAnswers, TypeformQuestions sections to get field detail.
 
@@ -165,9 +165,9 @@ In case that two rules affect a recruitment process the location has greater pri
 You can set the rules for an specific scope for the following rules:
 Method Name | Example
 -------------- | -------------- 
-setDemographicRules | ```let response = await recruitmentConfig.setDemographicRules()```
-setEmailRules | ```let response = await recruitmentConfig.setEmailRules()```
-setStatusExplanationRules | ```let response = await recruitmentConfig.setStatusExplanationRules()```
+setDemographicRules | ````let response = await recruitmentConfig.setDemographicRules()```
+setEmailRules | ````let response = await recruitmentConfig.setEmailRules()```
+setStatusExplanationRules | ````let response = await recruitmentConfig.setStatusExplanationRules()```
 
 As an output of each of those methods you will receive a promise that resolves this:
 ```javascript
@@ -192,8 +192,8 @@ because if there's a rule that already contains a rule then the rules will be me
 You can add rules for an specific scope for the following rules:
 Method Name | Example
 -------------- | -------------- 
-addTypeformAnswerRules | ```let response = await recruitmentConfig.addTypeformAnswerRules()```
-addTypeformQuestionRules | ```let response = await recruitmentConfig.addTypeformQuestionRules()```
+addTypeformAnswerRules | ````let response = await recruitmentConfig.addTypeformAnswerRules()```
+addTypeformQuestionRules | ````let response = await recruitmentConfig.addTypeformQuestionRules()```
 
 As an output of each of those methods you will receive a promise that resolves this:
 ```javascript
